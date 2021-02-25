@@ -35,12 +35,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GJones81/mern-client-boiler.git"
+    "url": "git+https://github.com/GJones81/Gopher_Client.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GJones81/mern-client-boiler/issues"
+    "url": "https://github.com/GJones81/Gopher_Client/issues"
   },
-  "homepage": "https://github.com/GJones81/mern-client-boiler#readme"
+  "homepage": "https://github.com/GJones81/Gopher_Client#readme"
 }
