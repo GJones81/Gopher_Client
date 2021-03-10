@@ -2,6 +2,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
+import * as actions from '../actions'
+
 // Custom componentd
 import Home from './pages/Home'
 import Login from './pages/Login'

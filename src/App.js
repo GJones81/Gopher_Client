@@ -1,5 +1,6 @@
 // Import packages
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 
@@ -10,9 +11,12 @@ import Footer from './nav/Footer'
 import Header from './nav/Header'
 import Nav from './nav/Nav'
 
+import * as actions from './actions'
+
 const App = props => {
   // Declare state variables
   let [user, setUser] = useState(null)
+  const dispatch = useDispatch()
 
   // useEffect hook
   useEffect(() => {
@@ -44,7 +48,12 @@ const App = props => {
 
   const updateToken = (newToken) => {
     localStorage.setItem('boilerToken', newToken || '')
-
+    dispatch({
+      type: 'CHANGE_AUTH',
+      payload: {
+        auth: newToken
+      }
+    })
     decodeToken()
   }
 

@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 
+import * as actions from '../../actions'
+
 const Login = props => {
   // Declare and initialize state variables
   let [email, setEmail] = useState('')

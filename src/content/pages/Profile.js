@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+
+import * as actions from '../../actions'
 
 const Profile = props => {
 	let [secretMessage, setSecretMessage] = useState('')
+	let storeToken = useSelector(state => state)
 
 	useEffect(() => {
 		let token = localStorage.getItem('boilerToken')
-		console.log(token)
+		// console.log(token)
+		console.log(storeToken)
 		fetch(process.env.REACT_APP_SERVER_URL + 'profile', {
 			headers: {
 				'Authorization': `Bearer ${token}`
