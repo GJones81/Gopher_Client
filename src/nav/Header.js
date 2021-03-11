@@ -3,7 +3,7 @@ import React from 'react'
 const Header = props => {
   return (
     <header className="App-header">
-      <h1>Hello World!</h1>
+      <h1>Grocery Gopher</h1>
     </header>
   )
 }

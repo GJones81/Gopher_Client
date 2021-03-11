@@ -1,8 +1,7 @@
 // Packages
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-
-import * as actions from '../../actions'
 
 const Login = props => {
   // Declare and initialize state variables
@@ -10,10 +9,12 @@ const Login = props => {
   let [message, setMessage] = useState('')
   let [password, setPassword] = useState('')
 
+  const dispatch = useDispatch()
+
   // Event handlers
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('submit', email, password, process.env.REACT_APP_SERVER_URL)
+    // console.log('submit', email, password, process.env.REACT_APP_SERVER_URL)
     // Fetch call to POST data
     fetch(process.env.REACT_APP_SERVER_URL + 'auth/login', {
       method: 'POST',
@@ -26,7 +27,7 @@ const Login = props => {
       }
     })
     .then(response => {
-      console.log('RESPONSE', response)
+      // console.log('RESPONSE', response)
       //handle non-200 responses
       if(!response.ok) {
         setMessage(`${response.status}: ${response.statusText}`)
@@ -34,8 +35,8 @@ const Login = props => {
       }
       //if we got a good response
       response.json().then(result => {
-        console.log('Result', result)
-        props.updateToken(result.token)
+        // console.log('Result', result)
+        props.updateToken(result.token) 
       })
 
     })

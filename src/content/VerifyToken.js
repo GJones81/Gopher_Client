@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-const Profile = props => {
+export default({children, props}) => {
 
 	let [secretMessage, setSecretMessage] = useState('')
 
-	let storedToken = useSelector(state => state.token.token)
+	let storedToken = useSelector(state => state.token)
 
 	useEffect(() => {
 		// let token = localStorage.getItem('boilerToken')
 		// console.log(token)
-		console.log(storedToken)
+		console.log(storedToken.token)
 		fetch(process.env.REACT_APP_SERVER_URL + 'profile', {
 			headers: {
-				'Authorization': `Bearer ${storedToken}`
+				'Authorization': `Bearer ${storedToken.token}`
 			}
 		})
 		.then(response => {
@@ -39,13 +39,9 @@ const Profile = props => {
 	if (!props.user) {
 		return <Redirect to="/login" />
 	}
-  return (
-    <div>
-      <h2>{props.user.firstname}</h2>
-      <img src={props.user.pic} alt={props.user.firstname} />
-      <h2>{secretMessage}</h2>
-    </div>
-  )
+    return (
+        <VerifyToken>
+            <children />
+        </VerifyToken>
+    )
 }
-
-export default Profile

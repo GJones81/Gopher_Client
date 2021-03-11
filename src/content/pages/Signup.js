@@ -1,5 +1,6 @@
 // Packages
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Signup = props => {
@@ -10,6 +11,8 @@ const Signup = props => {
   let [message, setMessage] = useState('')
   let [password, setPassword] = useState('')
   let [profileUrl, setProfileUrl] = useState('')
+
+  const dispatch = useDispatch()
 
   const handleSubmit = e => {
     e.preventDefault()

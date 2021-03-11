@@ -1,8 +1,7 @@
-import { CHANGE_AUTH } from '../actions/types'
 
-const initialState = ''
+const initialState = 'Token is not in the store'
 
-export default function(state = initialState, action){
+function authReducer(state = initialState, action){
     switch(action.type) {
         case 'CHANGE_AUTH':
             return action.payload
@@ -10,3 +9,5 @@ export default function(state = initialState, action){
             return state
     }
 }
+
+export default authReducer

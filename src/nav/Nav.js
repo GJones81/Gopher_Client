@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Nav = props => {
+
   const handleLogout = e => {
+    
     e.preventDefault()
     // Remove the token from localstorage (or cookies)
     props.updateToken('')

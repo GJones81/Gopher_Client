@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer>
-      Made by Guy in 2020
+      Designed and written by Guy Jones 2021
     </footer>
   )
 }
