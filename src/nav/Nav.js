@@ -1,13 +1,22 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Nav = props => {
+
+  const dispatch = useDispatch()
 
   const handleLogout = e => {
     
     e.preventDefault()
     // Remove the token from localstorage (or cookies)
     props.updateToken('')
+    dispatch({ 
+      type: 'CHANGE_AUTH', 
+      payload: { 
+        token: null 
+      }
+    })
     // TODO: Update the state of the App
   }
 
