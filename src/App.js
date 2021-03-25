@@ -34,6 +34,7 @@ const App = props => {
     if (storeToken) {
       //Decrypt user data from the token
       let decodedUser = jwtDecode(storeToken)
+      console.log('App.js', decodedUser)
 
       //If the token is not valid or expired, user stays out
       if (!decodedUser || Date.now() > decodedUser.exp * 1000) {
@@ -54,7 +55,7 @@ const App = props => {
   }
 
   const updateToken = (newToken) => {
-    localStorage.setItem('boilerToken', newToken || '')
+    // localStorage.setItem('boilerToken', newToken || '')
     dispatch({
       type: 'CHANGE_AUTH',
       payload: {

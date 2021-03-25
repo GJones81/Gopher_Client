@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom'
 
 const Profile = props => {
 
+	console.log('Profile.js',props)
+
 	let [secretMessage, setSecretMessage] = useState('')
 
 	let storedToken = useSelector(state => state.token.token)

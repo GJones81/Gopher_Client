@@ -1,16 +1,18 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Nav = props => {
 
   const dispatch = useDispatch()
 
+  let storedToken = useSelector(state => state.token.token)
+
   const handleLogout = e => {
     
     e.preventDefault()
     // Remove the token from localstorage (or cookies)
-    props.updateToken('')
+    // props.updateToken('')
     dispatch({ 
       type: 'CHANGE_AUTH', 
       payload: { 
@@ -32,7 +34,7 @@ const Nav = props => {
   )
 
   // TODO: If the user is logged in, show profile page and logout links
-  if (props.user) {
+  if (storedToken) {
     links = (
       <span>
         <li>
