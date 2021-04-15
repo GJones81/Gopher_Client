@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Profile = props => {
 
-	console.log('Profile.js',props)
-
 	let [secretMessage, setSecretMessage] = useState('')
 
-	let storedToken = useSelector(state => state.token.token)
+	const storedToken = useSelector(state => state.token.token)
+
+	let dispatch = useDispatch()
 
 	useEffect(() => {
-		// let token = localStorage.getItem('boilerToken')
-		// console.log(token)
-		console.log(storedToken)
 		fetch(process.env.REACT_APP_SERVER_URL + 'profile', {
 			headers: {
 				'Authorization': `Bearer ${storedToken}`
@@ -28,7 +25,6 @@ const Profile = props => {
 			}
 			response.json()
 			.then(result => {
-				// console.log(result)
 				setSecretMessage(result.message)
 			})
 		})
@@ -38,13 +34,11 @@ const Profile = props => {
 		})
 	})
 
-	if (!props.user) {
-		return <Redirect to="/login" />
-	}
+	// if (!storedToken) {
+	// 	return <Redirect to="/login" />
+	// }
   return (
     <div>
-      <h2>{props.user.firstname}</h2>
-      <img src={props.user.pic} alt={props.user.firstname} />
       <h2>{secretMessage}</h2>
     </div>
   )

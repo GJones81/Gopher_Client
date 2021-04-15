@@ -1,13 +1,15 @@
 // Packages
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Login = props => {
-  // Declare and initialize state variables
-  let [email, setEmail] = useState('')
-  let [message, setMessage] = useState('')
-  let [password, setPassword] = useState('')
+
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+
+  const storedToken = useSelector(state => state.token)
+  console.log(storedToken)
 
   const dispatch = useDispatch()
 
@@ -27,17 +29,16 @@ const Login = props => {
       }
     })
     .then(response => {
-      // console.log('RESPONSE', response)
+      console.log('RESPONSE', response)
       //handle non-200 responses
       if(!response.ok) {
-        setMessage(`${response.status}: ${response.statusText}`)
         return
       }
       //if we got a good response
       response.json().then(result => {
-        // console.log('Result', result)
-        props.updateToken(result.token) 
-      })
+        dispatch({ type: 'CHANGE_USER_STATUS', payload: result })
+        console.log('dispatch sent')    
+       })
 
     })
     .catch(err => {
@@ -45,14 +46,14 @@ const Login = props => {
     })
   }
 
-  if (props.user) {
+  // Must check if token is still valid
+  if (storedToken) {
     return <Redirect to="/profile" />
   }
 
   return (
     <div>
       <h2>Login</h2>
-      <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
           <div>
             <label>Email:</label>
@@ -62,7 +63,7 @@ const Login = props => {
             <label>Password:</label>
             <input type="password" name="password" onChange={e => setPassword(e.target.value)} />
           </div>
-          <button type="submit">Beam Me Up!</button>
+          <button type="submit">Log me in!</button>
         </form>
     </div>
   )

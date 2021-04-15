@@ -1,16 +1,17 @@
 // Packages
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Signup = props => {
-  // Declare and initialize state variables
-  let [email, setEmail] = useState('')
-  let [firstname, setFirstname] = useState('')
-  let [lastname, setLastname] = useState('')
-  let [message, setMessage] = useState('')
-  let [password, setPassword] = useState('')
-  let [profileUrl, setProfileUrl] = useState('')
+
+  const [ email, setEmail ] = useState('')
+  const [ firstName, setFirstName ] = useState('')
+  const [ lastName, setLastName ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ profilePicUrl, setProfilePicURL ] = useState('')
+
+  const storedToken = useSelector(state => state.token)
 
   const dispatch = useDispatch()
 
@@ -21,11 +22,11 @@ const Signup = props => {
      fetch(process.env.REACT_APP_SERVER_URL + 'auth/signup', {
       method: 'POST',
       body: JSON.stringify({
-        firstname,
-        lastname,
+        firstName,
+        lastName,
         email,
         password,
-        pic: profileUrl
+        pic: profilePicUrl
 
       }),
       headers: {
@@ -36,13 +37,15 @@ const Signup = props => {
       console.log('RESPONSE', response)
       //handle non-200 responses
       if(!response.ok) {
-        setMessage(`${response.status}: ${response.statusText}`)
         return
       }
       //if we got a good response
       response.json().then(result => {
         console.log('Result', result)
-        props.updateToken(result.token)
+        dispatch({
+          type: 'CHANGE_USER_STATUS',
+          payload: result
+        })
       })
 
     })
@@ -51,22 +54,21 @@ const Signup = props => {
     })
   }
 
-   if (props.user) {
+   if (storedToken) {
     return <Redirect to="/profile" />
   }
 
   return (
     <div>
       <h2>Signup</h2>
-      <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
         <div>
           <label>First Name:</label>
-          <input name="firstname" placeholder="Your first name" onChange={e => setFirstname(e.target.value)} />
+          <input name="firstname" placeholder="Your first name" onChange={e => setFirstName(e.target.value)} />
         </div>
         <div>
           <label>Last Name:</label>
-          <input name="lastname" placeholder="Your last name" onChange={e => setLastname(e.target.value)} />
+          <input name="lastname" placeholder="Your last name" onChange={e => setLastName(e.target.value)} />
         </div>
         <div>
           <label>Email:</label>
@@ -78,7 +80,7 @@ const Signup = props => {
         </div>
         <div>
           <label>Profile Pic URL:</label>
-          <input type="url" name="profileUrl" onChange={e => setProfileUrl(e.target.value)} />
+          <input type="url" name="profileUrl" onChange={e => setProfilePicURL(e.target.value)} />
         </div>
         <button type="submit">Sign Me Up!</button>
       </form>

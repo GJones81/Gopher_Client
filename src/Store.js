@@ -2,10 +2,10 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { loadState, saveState } from './LocalStorage'
+import thunk from 'redux-thunk'
+import { loadState, saveState } from './StoreStorage'
 
 import reducers from './reducers'
-import async from './middlewares/async'
 
 export default ({children}) => {
 
@@ -14,9 +14,11 @@ export default ({children}) => {
     const store = createStore(
                     reducers,
                     persistedState,
-                    applyMiddleware(
-                        async
-                    )
+                    composeWithDevTools(
+                        applyMiddleware(
+                            thunk
+                        )
+                    )   
                 )
 
     store.subscribe(() => {

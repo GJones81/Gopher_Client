@@ -1,6 +1,5 @@
 // Packages
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 
 // Custom componentd
@@ -11,21 +10,17 @@ import Signup from './pages/Signup'
 
 const Content = props => {
 
-  console.log('Content.js', props)
-
-  let storedToken = useSelector(state => state.token.token)
-
   return (
     <div className="container">
       <Route exact path="/" component={Home} />
       <Route path="/login" render={
-        () => <Login user={storedToken} updateToken={props.updateToken} />
+        () => <Login />
       } />
       <Route path="/profile" render={
-        () => <Profile user={storedToken} />
+        () => <Profile />
       } />
       <Route path="/signup" render={
-        () => <Signup user={storedToken} updateToken={props.updateToken} />
+        () => <Signup />
       } />
     </div>
   )

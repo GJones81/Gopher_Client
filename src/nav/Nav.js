@@ -6,20 +6,15 @@ const Nav = props => {
 
   const dispatch = useDispatch()
 
-  let storedToken = useSelector(state => state.token.token)
+  const storedToken = useSelector(state => state.token.token)
 
   const handleLogout = e => {
     
     e.preventDefault()
-    // Remove the token from localstorage (or cookies)
-    // props.updateToken('')
-    dispatch({ 
-      type: 'CHANGE_AUTH', 
-      payload: { 
-        token: null 
-      }
-    })
-    // TODO: Update the state of the App
+    // Remove the token from Store and local storage
+    dispatch({ type: 'CHANGE_USER_STATUS', payload: null })
+    localStorage.clear()
+    // TODO: Update the state of the App??
   }
 
   let links = (
@@ -35,16 +30,16 @@ const Nav = props => {
 
   // TODO: If the user is logged in, show profile page and logout links
   if (storedToken) {
-    links = (
-      <span>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          <a href='/' onClick={handleLogout}>Logout</a>
-        </li>
-    </span>
-    )
+          links = (
+            <span>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <a href='/' onClick={handleLogout}>Logout</a>
+              </li>
+          </span>
+          )
   }
 
   return (
