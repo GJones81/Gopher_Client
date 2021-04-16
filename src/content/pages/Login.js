@@ -1,15 +1,12 @@
 // Packages
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Login = props => {
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-
-  const storedToken = useSelector(state => state.token)
-  console.log(storedToken)
 
   const dispatch = useDispatch()
 
@@ -29,15 +26,14 @@ const Login = props => {
       }
     })
     .then(response => {
-      console.log('RESPONSE', response)
       //handle non-200 responses
       if(!response.ok) {
         return
       }
       //if we got a good response
       response.json().then(result => {
-        dispatch({ type: 'CHANGE_USER_STATUS', payload: result })
-        console.log('dispatch sent')    
+        dispatch({ type: 'CHANGE_USER_STATUS', payload: result.token })  
+        props.props.changeUserLoginStatus(true) 
        })
 
     })
@@ -46,8 +42,7 @@ const Login = props => {
     })
   }
 
-  // Must check if token is still valid
-  if (storedToken) {
+  if (props.props.userLoginStatus) {
     return <Redirect to="/profile" />
   }
 

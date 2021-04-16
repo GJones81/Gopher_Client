@@ -1,6 +1,6 @@
 // Packages
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 const Signup = props => {
@@ -10,8 +10,6 @@ const Signup = props => {
   const [ lastName, setLastName ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ profilePicUrl, setProfilePicURL ] = useState('')
-
-  const storedToken = useSelector(state => state.token)
 
   const dispatch = useDispatch()
 
@@ -42,10 +40,8 @@ const Signup = props => {
       //if we got a good response
       response.json().then(result => {
         console.log('Result', result)
-        dispatch({
-          type: 'CHANGE_USER_STATUS',
-          payload: result
-        })
+        dispatch({ type: 'CHANGE_USER_STATUS', payload: result.token })
+        props.props.changeUserLoginStatus(true)
       })
 
     })
@@ -54,7 +50,7 @@ const Signup = props => {
     })
   }
 
-   if (storedToken) {
+   if (props.props.userLoginStatus === true) {
     return <Redirect to="/profile" />
   }
 

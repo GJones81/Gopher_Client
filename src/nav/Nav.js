@@ -1,20 +1,24 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
 
 const Nav = props => {
 
   const dispatch = useDispatch()
 
-  const storedToken = useSelector(state => state.token.token)
+  const history = useHistory()
 
   const handleLogout = e => {
-    
+
     e.preventDefault()
-    // Remove the token from Store and local storage
+
     dispatch({ type: 'CHANGE_USER_STATUS', payload: null })
+
     localStorage.clear()
-    // TODO: Update the state of the App??
+
+    props.changeUserLoginStatus(false)
+
+    history.push('/')
   }
 
   let links = (
@@ -28,8 +32,7 @@ const Nav = props => {
     </span>
   )
 
-  // TODO: If the user is logged in, show profile page and logout links
-  if (storedToken) {
+  if (props.userLoginStatus === true) {
           links = (
             <span>
               <li>

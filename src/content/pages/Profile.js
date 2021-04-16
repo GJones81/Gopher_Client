@@ -1,45 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
+import useTokenVerify from '../../TokenVerify'
+import useTokenDecode from '../../TokenDecode'
 
 const Profile = props => {
 
-	let [secretMessage, setSecretMessage] = useState('')
+	const storedToken = useSelector(state => state.token)
 
-	const storedToken = useSelector(state => state.token.token)
+	const dispatch = useDispatch()
 
-	let dispatch = useDispatch()
+	const history = useHistory()
 
-	useEffect(() => {
-		fetch(process.env.REACT_APP_SERVER_URL + 'profile', {
-			headers: {
-				'Authorization': `Bearer ${storedToken}`
-			}
-		})
-		.then(response => {
-			// console.log('Response', response)
+	useTokenVerify()
 
-			if (!response.ok) {
-				setSecretMessage('Nice try!')
-				return
-			}
-			response.json()
-			.then(result => {
-				setSecretMessage(result.message)
-			})
-		})
-		.catch(err => {
-			console.log(err)
-			setSecretMessage('No message for YOU!')
-		})
-	})
+	useTokenDecode()
 
-	// if (!storedToken) {
-	// 	return <Redirect to="/login" />
-	// }
   return (
     <div>
-      <h2>{secretMessage}</h2>
+      <h2>Profile Page</h2>
     </div>
   )
 }

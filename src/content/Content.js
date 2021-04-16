@@ -14,13 +14,13 @@ const Content = props => {
     <div className="container">
       <Route exact path="/" component={Home} />
       <Route path="/login" render={
-        () => <Login />
+        () => <Login props = { props } />
       } />
       <Route path="/profile" render={
-        () => <Profile />
+        () => <Profile props = { props } />
       } />
       <Route path="/signup" render={
-        () => <Signup />
+        () => <Signup props = { props } />
       } />
     </div>
   )
