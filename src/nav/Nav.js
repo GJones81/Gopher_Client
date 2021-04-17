@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 
 const Nav = props => {
@@ -8,11 +8,17 @@ const Nav = props => {
 
   const history = useHistory()
 
+  const tokenStatus = useSelector(state => state.token)
+
   const handleLogout = e => {
 
     e.preventDefault()
 
-    dispatch({ type: 'CHANGE_USER_STATUS', payload: null })
+    dispatch({ type: 'CHANGE_USER_STATUS', payload: '' })
+    dispatch({ type: 'SAVE_USER_ADMIN_STATUS', payload: '' })
+    dispatch({ type: 'SAVE_USER_ID_NUM', payload: ''})
+    dispatch({ type: 'SAVE_USER_FIRSTNAME', payload: ''})
+    dispatch({ type: 'SAVE_USER_LASTNAME', payload: ''})
 
     localStorage.clear()
 
@@ -32,7 +38,10 @@ const Nav = props => {
     </span>
   )
 
-  if (props.userLoginStatus === true) {
+  // User Auth is controlled by State, but State is managed differently at different levels of the app
+  // The Nav component renders at all levels, so it checks both the JWT in the Store and the State set
+  // in the App component
+  if (tokenStatus || props.userLoginStatus) {
           links = (
             <span>
               <li>

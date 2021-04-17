@@ -14,18 +14,15 @@ import jwt_decode from 'jwt-decode'
         if (storedToken) { 
           
           let decodedUser = jwt_decode(storedToken)
-          console.log(decodedUser)
-          console.log(decodedUser.admin)
-          console.log(decodedUser._id)
-          console.log(decodedUser.firstname)
-          console.log(decodedUser.lastname)
-          
       
           if (!decodedUser || Date.now() > decodedUser.exp * 1000) {
               dispatch({ type: 'CHANGE_USER_STATUS', payload: '' })
+              dispatch({ type: 'SAVE_USER_ADMIN_STATUS', payload: '' })
+              dispatch({ type: 'SAVE_USER_ID_NUM', payload: ''})
+              dispatch({ type: 'SAVE_USER_FIRSTNAME', payload: ''})
+              dispatch({ type: 'SAVE_USER_LASTNAME', payload: ''})
               localStorage.clear()
           } else {
-              console.log('User and token are good')
               dispatch({ type: 'SAVE_USER_ADMIN_STATUS', payload: decodedUser.admin })
               dispatch({ type: 'SAVE_USER_ID_NUM', payload: decodedUser._id})
               dispatch({ type: 'SAVE_USER_FIRSTNAME', payload: decodedUser.firstname})
