@@ -15,10 +15,13 @@ const Nav = props => {
     e.preventDefault()
 
     dispatch({ type: 'CHANGE_USER_STATUS', payload: '' })
+    
     dispatch({ type: 'SAVE_USER_ADMIN_STATUS', payload: '' })
     dispatch({ type: 'SAVE_USER_ID_NUM', payload: ''})
     dispatch({ type: 'SAVE_USER_FIRSTNAME', payload: ''})
     dispatch({ type: 'SAVE_USER_LASTNAME', payload: ''})
+
+    dispatch({ type: 'DELETE_ALL_LISTS', payload: []})
 
     localStorage.clear()
 
