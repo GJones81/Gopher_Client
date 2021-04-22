@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const List = () => {
 
     const userFirstName = useSelector(state => state.userFirstName)
+    const itemIDNumberList = useSelector(state => state.itemIDNumbers)
 
     const itemList = useSelector(state => state.list)
 
@@ -11,15 +12,34 @@ const List = () => {
 
     const dispatch = useDispatch()
 
+    const randomNumberGenerator = () => {
+         return Math.floor(Math.random() * 100000000)
+    }
+
+    const generateIDNumber = (numberList) => {
+        let number = randomNumberGenerator()
+        if (numberList.includes(number)){
+            generateIDNumber()
+        } else {
+            return number
+        }
+    }
+
     const handleListSubmit = e => {
 
         e.preventDefault()
-        dispatch({ type: 'ADD_ITEM', payload: itemName})
+
+        const itemID = generateIDNumber(itemIDNumberList)
+        
+        dispatch({ type: 'ADD_ITEM', payload:{id: itemID, item: itemName} })
+
+        dispatch({ type: 'SAVE_USED_ID_NUMBER', payload: itemID })
+
         setItemName('')
     }
 
     const items = itemList.map((item,key) => {
-        return <li key={key}>{item}</li>
+        return <li key={item.id}>{item.item}</li>
     })
 
     return (
