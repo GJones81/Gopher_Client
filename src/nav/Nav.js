@@ -21,7 +21,7 @@ const Nav = props => {
     dispatch({ type: 'SAVE_USER_FIRSTNAME', payload: ''})
     dispatch({ type: 'SAVE_USER_LASTNAME', payload: ''})
 
-    dispatch({ type: 'DELETE_ALL_LISTS', payload: []})
+    dispatch({ type: 'DELETE_ALL_ITEMS', payload: []})
 
     localStorage.clear()
 

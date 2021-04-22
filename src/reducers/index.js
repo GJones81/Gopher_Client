@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 import authStatusReducer from './userAuthStatus'
 import { userAdminStatusReducer, userIDNumberReducer, userFirstNameReducer, userLastNameReducer } from './userInfo'
-import allListsReducer from './AllLists'
+import listReducer from './List'
 
 export default combineReducers({
     token: authStatusReducer,
@@ -10,5 +10,5 @@ export default combineReducers({
     userIDNumber: userIDNumberReducer,
     userFirstName: userFirstNameReducer,
     userLastName: userLastNameReducer,
-    allLists: allListsReducer
+    list: listReducer
 })

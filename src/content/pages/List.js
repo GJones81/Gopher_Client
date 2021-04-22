@@ -1,23 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const List = props => {
+const List = () => {
 
-    const allLists = useSelector(state => state.allLists.lists)
+    const userFirstName = useSelector(state => state.userFirstName)
 
-    allLists.forEach(list => {
-        console.log(list.value)
+    const itemList = useSelector(state => state.list)
+
+    const [ itemName, setItemName ] = useState('')
+
+    const dispatch = useDispatch()
+
+    const handleListSubmit = e => {
+
+        e.preventDefault()
+        dispatch({ type: 'ADD_ITEM', payload: itemName})
+        setItemName('')
+    }
+
+    const items = itemList.map((item,key) => {
+        return <li key={key}>{item}</li>
     })
 
-    let singleList = allLists.map((list,key) => {
-        return (
-            <li key={key}>{list.value}</li>
-        )
-    })
-    
     return (
         <div>
-            {singleList}
+            <div>
+                <h4>{userFirstName}'s Shopping List</h4>
+                <label>Add an item to the list:</label>
+                <form onSubmit ={handleListSubmit} >
+                    <input value = {itemName} onChange = {e => setItemName(e.target.value)}/>
+                    <button type = 'submit'>Add an item</button>
+                </form>
+            </div>
+            {items}
         </div>
     )
 }
