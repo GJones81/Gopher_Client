@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import Item from './Item'
+
 const List = () => {
 
     const userFirstName = useSelector(state => state.userFirstName)
@@ -38,8 +40,10 @@ const List = () => {
         setItemName('')
     }
 
-    const items = itemList.map((item,key) => {
-        return <li key={item.id}>{item.item}</li>
+    const items = itemList.map((item) => {
+        return (
+        <Item key = {item.id} id = {item.id} item = {item.item} />
+        )
     })
 
     return (

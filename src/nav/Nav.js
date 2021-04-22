@@ -23,7 +23,7 @@ const Nav = props => {
 
     dispatch({ type: 'DELETE_ALL_ITEMS', payload: []})
 
-    dispatch({ type: 'CLEAR_ID_NUMBERS', payload: []})
+    dispatch({ type: 'REMOVE_ALL_ID_NUMBERS', payload: []})
 
     localStorage.clear()
 
